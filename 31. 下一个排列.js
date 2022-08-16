@@ -3,24 +3,21 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var nextPermutation = function (nums) {
-    let min = Number.MAX_SAFE_INTEGER;
-    let index = nums.length - 1;
-    for (let i = nums.length - 1; i > 0; i--) {
-        if (nums[i] < min) {
-            min = nums[i];
-            index = i
-        }
-        if (nums[i - 1] < nums[i]) {
-            if (i === 1) {
-                [nums[0], nums[index]] = [nums[index], nums[0]];
-                
-                return;
-            } else {
-                [nums[i - 1], nums[i]] = [nums[i], nums[i - 1]];
-                return;
-            }
-        }
+    let i = nums.length - 2;
+    while (i >= 0 && nums[i] >= nums[i + 1]) {
+        i--;
     }
-    nums.reverse();
-    return;
+    if (i >= 0) {
+        let j = nums.length - 1;
+        while (j >= 0 && nums[i] >= nums[j]) {
+            j--;
+        }
+        [nums[i], nums[j]] = [nums[j], nums[i]];
+    }
+    let left = i + 1, right = nums.length - 1;
+    while (left < right) {
+        [nums[left], nums[right]] = [nums[right], nums[left]];
+        left++;
+        right--;
+    }
 };

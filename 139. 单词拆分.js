@@ -4,27 +4,18 @@
  * @return {boolean}
  */
 var wordBreak = function (s, wordDict) {
-    const map = new Map();
-    let end = s.length;
-    for (let w of wordDict) {
-        if (!map.has(w[w.length - 1])) {
-            map.set(w[w.length - 1], []);
-        }
-        map.get(w[w.length - 1]).push(w);
-    }
-    while (end > 0) {
-        let wordList = map.get(s[end - 1]);
-        if (!wordList) return false;
-        for (let i = 0; i < wordList.length; i++) {
-            const wordInS = s.slice(end - wordList[i].length, end);
-            if (wordInS === wordList[i]) {
-                end -= wordList[i].length
+    let n = s.length;
+    let dp = new Array(n + 1).fill(false);
+    let set = new Set(wordDict);
+    dp[0] = true;
+    for (let i = 1; i <= n; i++) {
+        for (let j = 0; j < i; j++) {
+            if (dp[j] && set.has(s.substring(j, i))) {
+                dp[i] = true;
                 break;
             }
-            else {
-                if (i === wordList.length - 1) return false;
-            }
         }
     }
-    return true;
+    return dp[n]
 };
+console.log(wordBreak("leetcode", ["leet", "code"]))

@@ -3,10 +3,7 @@
  * @param {number} k
  * @return {number}
  */
- var findKthLargest = function(nums, k) {
-    let res;
-    for(let i in nums){
-        
-    }
-    
+var findKthLargest = function (nums, k) {
+    nums.sort((a, b) => b - a)
+    return nums[k - 1]
 };
